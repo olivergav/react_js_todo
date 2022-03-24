@@ -1,12 +1,13 @@
 import './App.css';
 import { useEffect, useState } from "react";
 
+import {loadFromLocalStorage, saveToLocalStorage} from "./utils/localstorage";
+import uuidGen from './utils/uuid'
 
-const loadFromLocalStorage = (key) => localStorage.getItem(key) === null ? [] : JSON.parse(localStorage.getItem(key));
+import Headline from "./components/Headline";
+import TaskInput from "./components/TaskInput";
+import TaskList from "./components/TaskList";
 
-const saveToLocalStorage = (key, data) => localStorage.setItem(key, JSON.stringify(data))
-
-const uuidGen = () => Math.max(...(loadFromLocalStorage('tds').map(e => e.id)), 0) + 1
 
 
 function App() {
@@ -26,13 +27,14 @@ function App() {
   }
 
   const handleKeyUp = (event) => {
-    if (value !== '') {
+    if (value !== '' || value !== ' ') {
       if (event.key === 'Enter') {
         setTasks([{
           name: value,
           id: uuidGen(),
           status: false
         }, ...tasks]);
+        // setTasks([])
 
         setValue('');
       }
@@ -56,24 +58,9 @@ function App() {
 
   return (
     <div className="App">
-      <h1>todos</h1>
-      <input type="text"
-        value={value}
-        onChange={handleChange}
-        onKeyUp={handleKeyUp}
-      />
-      <ul>
-        {tasks.map(({ id, name, status }) => (
-          <li key={id} className='todo-item'>
-            <span
-              className={status ? 'status done' : 'status active'}
-              onClick={() => handleChangeStatus(id)}
-            />
-            {name}
-            <button onClick={() => handleDeleteTask(id)}>x</button>
-          </li>)
-        )}
-      </ul>
+      <Headline />
+      <TaskInput value={value} handleChange={handleChange} handleKeyUp={handleKeyUp} />
+      <TaskList tasks={tasks} handleChangeStatus={handleChangeStatus} handleDeleteTask={handleDeleteTask} />
     </div>
   );
 }
