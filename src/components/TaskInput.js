@@ -1,4 +1,4 @@
-function TaskInput({value, handleChange, handleKeyUp}){
+function TaskInput({value, handleChange, handleKeyUp}) {
     return (
         <input type="text"
                value={value}
