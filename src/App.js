@@ -1,66 +1,71 @@
 import './App.css';
-import {useState} from "react";
+import { useEffect, useState } from "react";
 
-function* uuidGen() {
-  let id = 0;
 
-  while (true){
-    yield id;
-    id++;
-  }
-}
+const loadFromLocalStorage = (key) => localStorage.getItem(key) === null ? [] : JSON.parse(localStorage.getItem(key));
 
-const uuid = uuidGen();
+const saveToLocalStorage = (key, data) => localStorage.setItem(key, JSON.stringify(data))
+
+const uuidGen = () => Math.max(...(loadFromLocalStorage('tds').map(e => e.id)), 0) + 1
+
 
 function App() {
   const [value, setValue] = useState('');
-  const [tasks, setTask] = useState([]);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    setTasks(loadFromLocalStorage('tds'));
+  }, []);
+
+  useEffect(() => {
+    saveToLocalStorage('tds', tasks)
+  }, [tasks]);
 
   const handleChange = (event) => {
     setValue(event.target.value)
   }
 
   const handleKeyUp = (event) => {
-    if (value !== ''){
-      if (event.key === 'Enter'){
-        setTask([...tasks, {
+    if (value !== '') {
+      if (event.key === 'Enter') {
+        setTasks([{
           name: value,
-          id: uuid.next().value,
+          id: uuidGen(),
           status: false
-        }])
-        // setTask([value, ...tasks]) //jesli chcemy na poczatku
-        setValue('')
+        }, ...tasks]);
+
+        setValue('');
       }
     }
   }
 
   function handleChangeStatus(id) {
     const newTasks = tasks.map(task => {
-      if (task.id === id){
+      if (task.id === id) {
         task.status = !task.status
       }
       return task
     })
 
-    setTask(newTasks);
+    setTasks(newTasks);
   }
 
   function handleDeleteTask(id) {
-    setTask(tasks.filter(task => task.id !== id))
+    setTasks(tasks.filter(task => task.id !== id))
   }
 
   return (
     <div className="App">
       <h1>todos</h1>
       <input type="text"
-       value={value} 
-       onChange={handleChange}
-       onKeyUp={handleKeyUp}
-       />
+        value={value}
+        onChange={handleChange}
+        onKeyUp={handleKeyUp}
+      />
       <ul>
-        {tasks.map(({id, name, status}) => (
+        {tasks.map(({ id, name, status }) => (
           <li key={id} className='todo-item'>
-            <span 
+            <span
               className={status ? 'status done' : 'status active'}
               onClick={() => handleChangeStatus(id)}
             />
