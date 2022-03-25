@@ -8,6 +8,8 @@ import Headline from "./components/Headline";
 import TaskInput from "./components/TaskInput";
 import TaskList from "./components/TaskList";
 import TaskItemLeft from "./components/TaskItemLeft";
+import TaskClearCompleted from "./components/TaskClearCompletedd";
+import TaskButtons from "./components/TaskButtons";
 
 function App() {
     const [value, setValue] = useState('');
@@ -72,16 +74,11 @@ function App() {
                     {/* TODO move to separate component (done)*/}
                     <TaskItemLeft tasks={tasks}/>
 
-                    {/* TODO move to separate component*/}
-                    <div>
-                        <button onClick={() => setSelection('all')}>All</button>
-                        <button onClick={() => setSelection(false)}>Active</button>
-                        <button onClick={() => setSelection(true)}>Completed</button>
-                    </div>
+                    {/* TODO move to separate component (done)t*/}
+                    <TaskButtons setSelection={setSelection}/>
 
-                    {/* TODO move to separate component*/}
-                    {tasks.filter((e) => e.status).length > 0 ? (
-                        <button onClick={handleDeleteDone}>Clear Completed</button>) : ('')}
+                    {/* TODO move to separate component (done)*/}
+                    <TaskClearCompleted tasks={tasks} handleDeleteDone={handleDeleteDone}/>
                 </>
             )}
 
