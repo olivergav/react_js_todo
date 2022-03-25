@@ -7,7 +7,7 @@ import uuidGen from './utils/uuid'
 import Headline from "./components/Headline";
 import TaskInput from "./components/TaskInput";
 import TaskList from "./components/TaskList";
-
+import TaskItemLeft from "./components/TaskItemLeft";
 
 function App() {
     const [value, setValue] = useState('');
@@ -69,8 +69,8 @@ function App() {
                     <TaskList tasks={tasks} handleChangeStatus={handleChangeStatus} handleDeleteTask={handleDeleteTask}
                               selection={selection}/>
 
-                    {/* TODO move to separate component*/}
-                    <p>{tasks.filter((e) => !e.status).length} items left</p>
+                    {/* TODO move to separate component (done)*/}
+                    <TaskItemLeft tasks={tasks}/>
 
                     {/* TODO move to separate component*/}
                     <div>
