@@ -1,6 +1,6 @@
 import TaskItem from "./TaskItem";
 
-function TaskList({tasks, handleChangeStatus, handleDeleteTask, selection}) {
+function TaskList({tasks, selection}) {
     return (
         <ul>
             {tasks
@@ -10,8 +10,6 @@ function TaskList({tasks, handleChangeStatus, handleDeleteTask, selection}) {
                     id={id}
                     status={status}
                     name={name}
-                    handleChangeStatus={handleChangeStatus}
-                    handleDeleteTask={handleDeleteTask}
                 />)}
         </ul>
     )
