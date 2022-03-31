@@ -1,7 +1,7 @@
 import './App.css';
 import {useEffect, useState} from "react";
 
-import {collection, getDocs} from "firebase/firestore"
+import {collection, getDocs, addDoc, updateDoc, deleteDoc, doc, writeBatch} from "firebase/firestore"
 
 import {loadFromLocalStorage, saveToLocalStorage} from "./utils/localstorage";
 import uuidGen from './utils/uuid'
@@ -44,37 +44,49 @@ function App() {
         setValue(event.target.value)
     }
 
-    const handleKeyUp = (event) => {
+    const handleKeyUp = async (event) => {
         if (value !== '' || value !== ' ') {
             if (event.key === 'Enter') {
-                setTasks([{
-                    name: value,
-                    id: uuidGen(),
-                    status: false
-                }, ...tasks]);
-                // setTasks([])
 
+                const newTodo = {
+                    name: value,
+                    status: false,
+                }
+
+                const docRef = await addDoc(collection(db, 'todos'), newTodo);
+
+                setTasks([Object.assign(newTodo, {id: docRef.id}), ...tasks]);
                 setValue('');
             }
         }
     }
 
-    function handleChangeStatus(id) {
-        const newTasks = tasks.map(task => {
-            if (task.id === id) {
-                task.status = !task.status
-            }
-            return task
-        })
+    async function handleChangeStatus(id) {
+        const newTasks = tasks.filter(task => task.id === id)[0];
+        newTasks.status = !newTasks.status;
+        // const {name, status} = newTasks
 
-        setTasks(newTasks);
+        await updateDoc(doc(db, 'todos', id), {status: newTasks.status});
+
+        setTasks([...tasks]);
     }
 
-    function handleDeleteTask(id) {
+    async function handleDeleteTask(id) {
+        await deleteDoc(doc(db, 'todos', id));
+
         setTasks(tasks.filter(task => task.id !== id))
     }
 
-    function handleDeleteDone() {
+    async function handleDeleteDone() {
+        const batch = writeBatch(db);
+        tasks.forEach((task) => {
+            if (task.status){
+                const ref = doc(db, 'todos', task.id)
+                batch.delete(ref);
+            }
+        })
+        await batch.commit();
+
         setTasks(tasks.filter(task => !task.status))
     }
 
