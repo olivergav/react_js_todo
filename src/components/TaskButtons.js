@@ -1,9 +1,10 @@
-function TaskButtons({setSelection}) {
+
+function TaskButtons({setSelection, selection}) {
     return (
         <div>
-            <button onClick={() => setSelection('all')}>All</button>
-            <button onClick={() => setSelection(false)}>Active</button>
-            <button onClick={() => setSelection(true)}>Completed</button>
+            <button className={selection === 'all' ? 'active' : ''} onClick={() => setSelection('all')}>All</button>
+            <button className={selection === false ? 'active' : ''} onClick={() => setSelection(false)}>Active</button>
+            <button className={selection === true ? 'active' : ''} onClick={() => setSelection(true)}>Completed</button>
         </div>
     )
 }

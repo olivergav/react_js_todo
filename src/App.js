@@ -38,14 +38,18 @@ function App() {
                     <>
                         <TaskList tasks={tasks} selection={selection}/>
 
-                        {/* TODO move to separate component (done)*/}
-                        <TaskItemLeft tasks={tasks}/>
+                        <div className="utils">
+                            {/* TODO move to separate component (done)*/}
+                            <TaskItemLeft tasks={tasks}/>
 
-                        {/* TODO move to separate component (done)t*/}
-                        <TaskButtons setSelection={setSelection}/>
+                            {/* TODO move to separate component (done)*/}
+                            <TaskButtons setSelection={setSelection} selection={selection}/>
 
-                        {/* TODO move to separate component (done)*/}
-                        <TaskClearCompleted tasks={tasks}/>
+                            <div>
+                                {/* TODO move to separate component (done)*/}
+                                <TaskClearCompleted tasks={tasks}/>
+                            </div>
+                        </div>
                     </>
                 )}
             </div>
