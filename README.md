@@ -11,4 +11,11 @@
 - enjoy:)
 
 ## Link to live version:
-[Click](https://todos-f0796.web.app)
+[Click me!](https://todos-f0796.web.app)
+
+
+### Functionalities
+
+- Full CRUD
+- Connected using realtime database
+- Data filtering
