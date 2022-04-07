@@ -4,7 +4,7 @@
 - react
 - scss
 
-#How to use
+# How to use
 - `git clone https://github.com/olivergav/react_js_todo`
 - `npm i`
 - `npm start`
