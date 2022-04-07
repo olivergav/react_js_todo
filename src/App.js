@@ -1,8 +1,7 @@
-import './App.css';
+import './App.scss';
 import {useEffect, useState} from "react";
 
 import {collection, onSnapshot} from "firebase/firestore"
-
 
 import Headline from "./components/Headline";
 import TaskInput from "./components/TaskInput";
@@ -33,21 +32,23 @@ function App() {
     return (
         <div className="App">
             <Headline/>
-            <TaskInput/>
-            {tasks.length === 0 ? ('') : (
-                <>
-                    <TaskList tasks={tasks} selection={selection}/>
+            <div className="container">
+                <TaskInput/>
+                {tasks.length === 0 ? ('') : (
+                    <>
+                        <TaskList tasks={tasks} selection={selection}/>
 
-                    {/* TODO move to separate component (done)*/}
-                    <TaskItemLeft tasks={tasks}/>
+                        {/* TODO move to separate component (done)*/}
+                        <TaskItemLeft tasks={tasks}/>
 
-                    {/* TODO move to separate component (done)t*/}
-                    <TaskButtons setSelection={setSelection}/>
+                        {/* TODO move to separate component (done)t*/}
+                        <TaskButtons setSelection={setSelection}/>
 
-                    {/* TODO move to separate component (done)*/}
-                    <TaskClearCompleted tasks={tasks}/>
-                </>
-            )}
+                        {/* TODO move to separate component (done)*/}
+                        <TaskClearCompleted tasks={tasks}/>
+                    </>
+                )}
+            </div>
         </div>
     );
 }

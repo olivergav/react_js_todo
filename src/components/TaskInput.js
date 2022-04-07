@@ -24,11 +24,12 @@ function TaskInput() {
     }
 
     return (
-        <input type="text"
-               value={value}
+
+        <input type="text" value={value}
                onChange={handleChange}
                onKeyUp={handleKeyUp}
-        />
+        className={'input'}
+        placeholder={'What needs to be done?'}/>
     );
 }
 

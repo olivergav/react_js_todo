@@ -1,0 +1,20 @@
+@import 'styles/normalize';
+@import 'styles/layout';
+@import 'styles/components';
+
+
+.todo-item {
+  display: flex;
+  align-items: stretch;
+  line-height: 22px;
+  justify-content: center;
+}
+
+.todo-item button {
+  opacity: 0;
+  transition: opacity 400ms;
+}
+
+.todo-item:hover button {
+  opacity: 1;
+}
