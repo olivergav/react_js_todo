@@ -28,7 +28,6 @@ function App() {
         }
     }, []);
 
-
     return (
         <div className="App">
             <Headline/>
@@ -39,14 +38,11 @@ function App() {
                         <TaskList tasks={tasks} selection={selection}/>
 
                         <div className="utils">
-                            {/* TODO move to separate component (done)*/}
                             <TaskItemLeft tasks={tasks}/>
 
-                            {/* TODO move to separate component (done)*/}
                             <TaskButtons setSelection={setSelection} selection={selection}/>
 
                             <div>
-                                {/* TODO move to separate component (done)*/}
                                 <TaskClearCompleted tasks={tasks}/>
                             </div>
                         </div>
